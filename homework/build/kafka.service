@@ -1,0 +1,22 @@
+[Unit]
+Description=Apache Kafka
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kafka_2.11-1.0.0
+Environment='LOG_DIR=/var/log/kafka'
+EnvironmentFile=-/etc/sysconfig/kafka
+
+ExecStart=/opt/kafka_2.11-1.0.0/bin/kafka-server-start.sh /opt/kafka_2.11-1.0.0/config/server.properties
+ExecStop=/opt/kafka_2.11-1.0.0/bin/kafka-server-stop.sh
+
+User=kafka
+Group=kafka
+
+SyslogIdentifier=kafka
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

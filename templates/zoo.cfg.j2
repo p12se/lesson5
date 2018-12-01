@@ -1,0 +1,35 @@
+#jinja2: lstrip_blocks: True
+# Configuration file for Apache Zookeeper.
+#
+# {{ ansible_managed }}
+#
+
+{%- macro to_properties(opts, prefix) %}
+{% set prefix = prefix + '.' if prefix else prefix %}
+{% for key, value in opts.items() %}
+  {% if value is string %}
+    {{- prefix + key }}={{ value }}
+
+  {% elif value in [true, false] %}
+    {{- prefix + key }}={{ value | lower }}
+
+  {% elif value is number %}
+    {{- prefix + key }}={{ value }}
+
+  {% elif value is mapping %}
+    {{- to_properties(value, prefix + key) -}}
+  {% else %}
+    {{- prefix + key }}={{ value }}
+
+  {% endif %}
+{% endfor %}
+{% endmacro -%}
+########################### Node settings  #############################
+
+{{ to_properties(svc.options, '') }}
+########################### Cluster settings #############################
+
+{% for host in svc.cluster %}
+server.{{ loop.index0 }}={{ host }}:2888:3888
+{# server.{{ loop.index0 }}={{ hostvars[host].ansible_default_ipv4.address }}:2888:3888 #}
+{% endfor %}

@@ -1,0 +1,21 @@
+[Unit]
+Description=Apache Zookeeper
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory={{ svc.home }}
+SyslogIdentifier=zookeeper
+EnvironmentFile=-/etc/sysconfig/{{ svc.daemon }}
+
+ExecStart={{ svc.home }}/bin/zkServer.sh start
+ExecStop={{ svc.home }}/bin/zkServer.sh stop
+
+User={{ svc.owner }}
+Group={{ svc.owner }}
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

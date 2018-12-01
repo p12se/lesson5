@@ -1,0 +1,4 @@
+ZOO_LOG4J_PROP=INFO,ROLLINGFILE
+ZOO_LOG_DIR=/var/log/zookeeper
+ZOOPIDFILE=/var/lib/zookeeper/zookeeper.pid
+JMXPORT=55555

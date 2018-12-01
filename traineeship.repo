@@ -1,0 +1,6 @@
+[traineeship]
+baseurl = http://downloader:<password>@<NEXUS_DNS>/nexus/content/repositories/traineeship-yum/
+enabled = 1
+gpgcheck = no
+protect = no
+name = Thumbtack's RPM repository for traineeship 2018

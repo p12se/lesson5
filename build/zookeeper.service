@@ -1,0 +1,21 @@
+[Unit]
+Description=Apache Zookeeper
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/zookeeper-3.4.13
+SyslogIdentifier=zookeeper
+EnvironmentFile=-/etc/sysconfig/zookeeper-3.4.13
+
+ExecStart=/opt/zookeeper-3.4.13/bin/zkServer.sh start
+ExecStop=/opt/zookeeper-3.4.13/bin/zkServer.sh stop
+
+User=zookeeper
+Group=zookeeper
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
